@@ -8,7 +8,6 @@
 #include <stdbool.h>
 #include <time.h>
 
-
 typedef struct card_s {
 	char color[10];
 	int value;
@@ -89,8 +88,6 @@ void printCardArray(card carray[], int size) {
 	for (i = 0; i < size; i++) {
 		printf("%s %d %s\n", carray[i].color, carray[i].value, carray[i].action);
 	}
-
 }
-
 
 #endif

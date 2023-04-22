@@ -8,71 +8,73 @@
 #include <time.h>
 #include "functions.h"
 
-//#include "cards.c"
-
-#define deckSize 5
+#define deckSize 12
 
 int main(void) {
 
 	FILE* inputFile = NULL;
-	FILE* userFile = NULL;
 	card deck[deckSize];
-	char p1[20];
-	char p2[20];
-	char i = 'a';
-	char fileName[20];
-	bool deckCreated = false;
+	card center;
+	card play[2];
 
+	char player1[20];
+	char player2[20];
+	char inputChar = 'a';
 
+	//get plater names
 	printf("Let's play a game of DOS\nPlayer 1 Enter your name: ");
-	fgets(p1, 20, stdin);
+	fgets(player1, 20, stdin);
 	printf("\nPlayer 2 Enter your name: ");
-	fgets(p2, 20, stdin);
+	fgets(player2, 20, stdin);
 
-	
-	while (!deckCreated) {
-		while ((i != '1') && (i != '2')) {
-			printf("\nPress 1 to shuffle the DOS deck or 2 to load a deck from a file: ");
-			scanf(" %c", &i);
+	//choose starting deck
+	while ((inputChar != '1') && (inputChar != '2')) {
+		printf("\nPress 1 to shuffle the DOS deck or 2 to load a deck from a file: ");
+		scanf(" %c", &inputChar);
 
-			if (i == '1') {
-				//suffles the deck
-				//shuffleCard(deck, deckSize);
-				//opens file
-				//inputFile = fopen("cards.txt", "r");
-			}
-			else if (i == '2') {
-				//opens file
-				printf("Enter the name of the data file: ");
-				scanf("%s", fileName);
+		if (inputChar == '1') {
+			inputFile = fopen("CardDeck.txt", "r");
+			readCardFile(inputFile, deck, deckSize);
+			shuffleCard(deck, deckSize);
 
-				// Open file and read data into array
-				userFile = fopen(fileName, "r");
-				if (userFile == NULL) {
-					printf("Error: Unable to open file try again\n");
-					i = 'a';
-				}
-				else {
-					printf("load a deck from a file\n");
-				}
+		}
+		else if (inputChar == '2') {
+			//opens file
+			printf("Enter the name of the data file: ");
+			scanf("%s", fileName);
+
+			// Open file and read data into array
+			inputFile = fopen(fileName, "r");
+			if (inputFile == NULL) {
+				printf("Error: Unable to open file try again\n");
+				inputChar = 'a';
 			}
 			else {
-				printf("Invalid: Try it again\n");
+				printf("loading a deck from a file\n");
+				readCardFile(inputFile, deck, deckSize);
 			}
 		}
+		else {
+			printf("Invalid: Try it again\n");
+		}
 	}
+	card drawnCard;
 
-	//reads file contents into the deck of cards
-	readCardFile(inputFile, deckSize, deck);
-
-
-
-	//deal a card
-	//dealCard();
-
+	//distribute a card
+	drawnCard = dealCard(deck, deckSize);
+	printf("\n%s\n%d\n\n", drawnCard.color, drawnCard.value);
+		
 	//prints the cards for code development 
 	printCardArray(deck, deckSize);
 
+	//verify the checkplay function works 
+	center.value = 6;
+	play[0].value = 5;
+	play[1].value = 1;
+
+	if (checkPlay(center, play)) {
+		printf("YAY!!");
+	}
 
 	return 0;
 }
