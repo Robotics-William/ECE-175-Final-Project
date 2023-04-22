@@ -5,7 +5,7 @@ blue
 2
 wildcolor
 yellow
-#
+0
 wildcard
 green
 4
