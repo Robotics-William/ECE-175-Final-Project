@@ -13,4 +13,7 @@ void readCardFile(FILE *inp, int size, card carray[]) {
 
 }
 
+void printCardArray();
+
+
 #endif
