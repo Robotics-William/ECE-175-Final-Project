@@ -1,0 +1,15 @@
+red
+6
+nothing
+blue
+2
+wildcolor
+yellow
+#
+wildcard
+green
+4
+nothing
+yelllow
+9
+nothing
