@@ -15,6 +15,14 @@ typedef struct card_s {
 	//struct card_s* pt;
 } card;
 
+typedef struct player_s {
+
+	bool active;
+	char name[20];
+	card* hand;
+
+} player;
+
 void readCardFile(FILE *inp, card carray[], int size) {
 	int i;
 
@@ -82,11 +90,49 @@ card dealCard(card carray[], int size) {
 
 }
 
+//void addCard(card carray[], int size) {}
+
+void dealHands(player parray[], card deck[], int size) {
+	int i;
+	int j;
+
+	for (i = 0; i < 4; i++) {
+
+		if (parray[i].active == true) {
+			parray[i].hand = (card*)malloc(7 * sizeof(card));
+
+			for (j = 0; j < 7; j++) {
+				parray[i].hand[j] = dealCard(deck, size);
+			}
+		}
+	}
+}
+
 void printCardArray(card carray[], int size) {
 	int i;
 
 	for (i = 0; i < size; i++) {
 		printf("%s %d %s\n", carray[i].color, carray[i].value, carray[i].action);
+	}
+}
+
+void initPlayers(player parray[4], int numPlayers) {
+	int i;
+	char dummy;
+
+	for (i = 0; i < 4; i++) {
+		parray[i].active = false;
+		parray[i].hand = NULL;
+	}
+	for (i = 0; i < numPlayers; i++) {
+		parray[i].active = true;
+		printf("\nPlayer %d Enter your name: ", i + 1);
+		if (i == 0) {
+			scanf("%c", &dummy);
+		}
+		fgets(parray[i].name, 20, stdin);
+		parray[i].name[strlen(parray[i].name) - 1] = '\0';
+		printf("%s", parray[i].name);
 	}
 }
 
