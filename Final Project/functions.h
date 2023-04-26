@@ -20,8 +20,10 @@ typedef struct player_s {
 	bool active;
 	char name[20];
 	card* hand;
+	int cardNum;
 
 } player;
+
 
 void readCardFile(FILE *inp, card carray[], int size) {
 	int i;
@@ -43,19 +45,19 @@ void readCardFile(FILE *inp, card carray[], int size) {
 
 }
 
-bool checkPlay(card centerCard, card* playCards) {
-
-	if (centerCard.value == playCards->value) {
-		return true;
-	
-	}
-	else if (centerCard.value == (playCards[0].value + playCards[1].value)) {
-		return true;
-	}
-
-	return false; 
-
-}
+//bool checkPlay(card centerCard, card* playCards) {
+//
+//	if (centerCard.value == playCards->value) {
+//		return true;
+//	
+//	}
+//	else if (centerCard.value == (playCards[0].value + playCards[1].value)) {
+//		return true;
+//	}
+//
+//	return false; 
+//
+//}
 
 void shuffleCard(card carray[], int size) {
 	int i;
@@ -90,7 +92,28 @@ card dealCard(card carray[], int size) {
 
 }
 
-//void addCard(card carray[], int size) {}
+void addCard(player parray[], int playerNum, card deck[], int size) {
+	int index;
+
+	parray[playerNum].cardNum++;
+	index = parray[playerNum].cardNum;
+
+	parray[playerNum].hand = (card*)realloc(parray[playerNum].hand, index * sizeof(card));
+	parray[playerNum].hand[index - 1] = dealCard(deck, size);
+	
+
+}
+
+void removeCard(player parray[], int playerNum, int cardLoc) {
+	int index;
+	
+	parray[playerNum].cardNum--;
+	index = parray[playerNum].cardNum;
+
+	parray[playerNum].hand[cardLoc] = parray[playerNum].hand[index];
+	parray[playerNum].hand = (card*)realloc(parray[playerNum].hand, index * sizeof(card));
+
+}
 
 void dealHands(player parray[], card deck[], int size) {
 	int i;
@@ -104,6 +127,8 @@ void dealHands(player parray[], card deck[], int size) {
 			for (j = 0; j < 7; j++) {
 				parray[i].hand[j] = dealCard(deck, size);
 			}
+
+			parray[i].cardNum = 7;
 		}
 	}
 }
@@ -123,6 +148,7 @@ void initPlayers(player parray[4], int numPlayers) {
 	for (i = 0; i < 4; i++) {
 		parray[i].active = false;
 		parray[i].hand = NULL;
+		parray[i].cardNum = NULL;
 	}
 	for (i = 0; i < numPlayers; i++) {
 		parray[i].active = true;

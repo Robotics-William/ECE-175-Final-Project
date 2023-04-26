@@ -23,6 +23,7 @@ int main(void) {
 	char fileName[20];
 
 	int i;
+	int playerIndex;
 	int playerNum;
 
 	//get plater names
@@ -72,27 +73,90 @@ int main(void) {
 			printf("Invalid: Try it again\n");
 		}
 	}
+
+	/* MAIN GAME LOOP*/
+	playerIndex = rand() % playerNum;
+	/*while (true) {
+
+		//add two cards to the center row if less than two
+
+		//prompt current player to play card(s) or to draw a card
+
+		//check if player wins
+
+		//else:
+
+		//prompt current player to play bonus cards and distribute any cards to other players
+
+		//check if player wins
+
+		//else:
+
+		//remove matches from the center row
+
+		//change current player to next player
+
+		playerIndex++;
+		if (playerIndex == playerNum) {
+			playerIndex = 0;
+
+		}
+	} */
+
+
+	/* Declare Current Player the Winner */
+
+	char string[10] = "Blue";
+
+	int length = strlen(string);
+	int print = (9 - length) / 2; 
+
+	for (int i = 0; i < print; i++) {
+		printf("*");
+
+	}
+	printf("%s", string);
+	for (i = 0; i < print; i++) {
+		printf("*");
+
+	}
+	if (length % 2 == 0) {
+		printf("*");
+
+	}
 	
 
-	//TODO initalize player hands
-		//TODO create function to intialize player hands
-	
-	dealHands(players, deck, deckSize);
+	//Create player hands
+	//dealHands(players, deck, deckSize);
+	//	//create function to add card
 
-	//card* playerHand = (card*)malloc(7 * sizeof(card));
+	//printf("\n%d\n", players[0].cardNum);
+	//printCardArray(players[0].hand, 7);
 
-	//for (i = 0; i < 7; i++) {
-	//	playerHand[i] = dealCard(deck, deckSize);
+	//printf("\n%d\n", players[1].cardNum);
+	//printCardArray(players[1].hand, 7);
 
-	//}
-		//create function to add card
-	players[0].hand = (card*)realloc(players[0].hand, 8 * sizeof(card));
-	players[0].hand[7] = dealCard(deck, deckSize);
+	////add a card to hand
+	//addCard(players, 0, deck, deckSize);
 
-	printf("\n");
-	printCardArray(players[0].hand, 8);
-	printf("\n");
-	printCardArray(players[1].hand, 7);
+	//printf("\n%d\n", players[0].cardNum);
+	//printCardArray(players[0].hand, 8);
+
+	//addCard(players, 1, deck, deckSize);
+
+	//printf("\n%d\n", players[1].cardNum);
+	//printCardArray(players[1].hand, 8);
+
+	////remove the third card from hand
+	//removeCard(players, 0, 0);
+	//
+	//printf("\n%d\n", players[0].cardNum);
+	//printCardArray(players[0].hand, 7);
+
+	//removeCard(players, 1, 0);
+
+	//printf("\n%d\n", players[1].cardNum);
+	//printCardArray(players[1].hand, 7);
 
 
 	//TODO Create Game loop
