@@ -7,6 +7,7 @@
 #include <stdbool.h>
 #include <time.h>
 #include "functions.h"
+#include "cards.c"
 
 #define deckSize 108
 
@@ -108,22 +109,7 @@ int main(void) {
 
 	char string[10] = "Blue";
 
-	int length = strlen(string);
-	int print = (9 - length) / 2; 
-
-	for (int i = 0; i < print; i++) {
-		printf("*");
-
-	}
-	printf("%s", string);
-	for (i = 0; i < print; i++) {
-		printf("*");
-
-	}
-	if (length % 2 == 0) {
-		printf("*");
-
-	}
+	printCard(3, string);
 	
 
 	//Create player hands
