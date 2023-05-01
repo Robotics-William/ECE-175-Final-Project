@@ -24,6 +24,9 @@
   <ItemGroup>
     <ClInclude Include="functions.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="junkcode.txt" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>

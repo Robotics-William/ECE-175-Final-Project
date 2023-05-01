@@ -7,22 +7,14 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <time.h>
+//#include "cards.c"
 
 typedef struct card_s {
 	char color[10];
 	int value;
 	char action[15];
-	//struct card_s* pt;
+	struct card_s* pt;
 } card;
-
-typedef struct player_s {
-
-	bool active;
-	char name[20];
-	card* hand;
-	int cardNum;
-
-} player;
 
 
 void readCardFile(FILE *inp, card carray[], int size) {
@@ -30,6 +22,7 @@ void readCardFile(FILE *inp, card carray[], int size) {
 
 	for (i = 0; i < size; i++) {
 		fscanf(inp, "%s %d %s", carray[i].color, &carray[i].value, carray[i].action);
+		carray[i].pt = NULL;
 
 	/*	
 		fscanf(inp, "%s %d", carray[i].color, &carray[i].value);
@@ -92,74 +85,445 @@ card dealCard(card carray[], int size) {
 
 }
 
-void addCard(player parray[], int playerNum, card deck[], int size) {
-	int index;
-
-	parray[playerNum].cardNum++;
-	index = parray[playerNum].cardNum;
-
-	parray[playerNum].hand = (card*)realloc(parray[playerNum].hand, index * sizeof(card));
-	parray[playerNum].hand[index - 1] = dealCard(deck, size);
-	
-
-}
-
-void removeCard(player parray[], int playerNum, int cardLoc) {
-	int index;
-	
-	parray[playerNum].cardNum--;
-	index = parray[playerNum].cardNum;
-
-	parray[playerNum].hand[cardLoc] = parray[playerNum].hand[index];
-	parray[playerNum].hand = (card*)realloc(parray[playerNum].hand, index * sizeof(card));
-
-}
-
-void dealHands(player parray[], card deck[], int size) {
-	int i;
-	int j;
-
-	for (i = 0; i < 4; i++) {
-
-		if (parray[i].active == true) {
-			parray[i].hand = (card*)malloc(7 * sizeof(card));
-
-			for (j = 0; j < 7; j++) {
-				parray[i].hand[j] = dealCard(deck, size);
-			}
-
-			parray[i].cardNum = 7;
-		}
-	}
-}
-
 void printCardArray(card carray[], int size) {
 	int i;
+	int j;
+	int length;
+	int printLen;
 
 	for (i = 0; i < size; i++) {
-		printf("%s %d %s\n", carray[i].color, carray[i].value, carray[i].action);
+		
+		printf(" =========    ");
+		
 	}
+	printf("\n");
+
+	for (i = 0; i < size; i++) {
+
+		length = strlen(carray[i].color);
+		printLen = (9 - length) / 2;
+
+		printf("/");
+		for (j = 0; j < printLen; j++) {
+			printf(" ");
+
+		}
+		if (length % 2 == 0) {
+			printf(" ");
+
+		}
+		printf("%s", carray[i].color);
+
+		for (j = 0; j < printLen; j++) {
+			printf(" ");
+
+		}
+		printf("\\   ");
+
+	}
+	printf("\n");
+
+	for (i = 0; i < size; i++) {
+		if (carray[i].value == 1 || carray[i].value == 4) {
+			printf("|         |   ");
+
+		}
+		else if (carray[i].value == 10) {
+			printf("|     __  |   ");
+
+		}
+		else if (carray[i].value == 11) {
+			printf("|  _/___/_|   ");
+		}
+		else {
+			printf("|   __    |   ");
+		}
+
+	}
+	printf("\n");
+
+	for (i = 0; i < size; i++) {
+		if (carray[i].value == 1) {
+			printf("|    |    |   ");
+
+		}
+		else if (carray[i].value == 2 || carray[i].value == 3) {
+			printf("|   __|   |   ");
+
+		}
+		else if (carray[i].value == 4 || carray[i].value == 8 || carray[i].value == 9) {
+			printf("|  |__|   |   ");
+		}
+		else if (carray[i].value == 5 || carray[i].value == 6) {
+			printf("|  |__    |   ");
+		}
+		else if (carray[i].value == 7) {
+			printf("|     |   |   ");
+		}
+		else if (carray[i].value == 10) {
+			printf("|  | |  | |   ");
+		}
+		else {
+			printf("| _/___/_ |   ");
+		}
+
+	}
+	printf("\n");
+
+	for (i = 0; i < size; i++) {
+		if (carray[i].value == 1) {
+			printf("|    |    |   ");
+
+		}
+		else if (carray[i].value == 2) {
+			printf("|  |__    |   ");
+		}
+		else if (carray[i].value == 3 || carray[i].value == 5 || carray[i].value == 9) {
+			printf("|   __|   |   ");
+		}
+		else if (carray[i].value == 4 || carray[i].value == 7) {
+			printf("|     |   |   ");
+		}
+		else if (carray[i].value == 6 || carray[i].value == 8) {
+			printf("|  |__|   |   ");
+		}
+		else if (carray[i].value == 10) {
+			printf("|  | |__| |   ");
+
+		}
+		else {
+			printf("| /   /   |   ");
+		}
+
+	}
+	printf("\n");
+
+	for (i = 0; i < size; i++) {
+
+		printf("|         |   ");
+
+	}
+	printf("\n");
+
+	for (i = 0; i < size; i++) {
+
+		length = strlen(carray[i].color);
+		printLen = (9 - length) / 2;
+
+		printf("\\");
+		for (j = 0; j < printLen; j++) {
+			printf(" ");
+
+		}
+		printf("%s", carray[i].color);
+		for (j = 0; j < printLen; j++) {
+			printf(" ");
+
+		}
+		if (length % 2 == 0) {
+			printf(" ");
+
+		}
+		printf("/   ");
+
+	}
+	printf("\n");
+
+	for (i = 0; i < size; i++) {
+
+		printf(" =========    ");
+
+	}
+
+	//printf("%s %d %s\n", carray[i].color, carray[i].value, carray[i].action);
 }
 
-void initPlayers(player parray[4], int numPlayers) {
+void printList(card *hand) {
+	card* temp = hand;
+	int length;
+	int printLen;
 	int i;
-	char dummy;
 
-	for (i = 0; i < 4; i++) {
-		parray[i].active = false;
-		parray[i].hand = NULL;
-		parray[i].cardNum = NULL;
+	while (temp != NULL) {
+		printf(" =========    ");
+		temp = temp->pt;
 	}
-	for (i = 0; i < numPlayers; i++) {
-		parray[i].active = true;
-		printf("\nPlayer %d Enter your name: ", i + 1);
-		if (i == 0) {
-			scanf("%c", &dummy);
+	printf("\n");
+
+	temp = hand;
+	while (temp != NULL) {
+
+		length = strlen(temp->color);
+		printLen = (9 - length) / 2;
+
+		printf("/");
+		for (i = 0; i < printLen; i++) {
+			printf(" ");
+
 		}
-		fgets(parray[i].name, 20, stdin);
-		parray[i].name[strlen(parray[i].name) - 1] = '\0';
-		printf("%s", parray[i].name);
+		if (length % 2 == 0) {
+			printf(" ");
+
+		}
+		printf("%s", temp->color);
+
+		for (i = 0; i < printLen; i++) {
+			printf(" ");
+
+		}
+		printf("\\   ");
+		temp = temp->pt;
 	}
+	printf("\n");
+
+	temp = hand;
+	while (temp != NULL) {
+		if (temp->value == 1 || temp->value == 4) {
+			printf("|         |   ");
+
+		}
+		else if (temp->value == 10) {
+			printf("|     __  |   ");
+
+		}
+		else if (temp->value == 11) {
+			printf("|  _/___/_|   ");
+		}
+		else {
+			printf("|   __    |   ");
+		}
+		temp = temp->pt;
+	}
+	printf("\n");
+
+	temp = hand;
+	while (temp != NULL) {
+		if (temp->value == 1) {
+			printf("|    |    |   ");
+
+		}
+		else if (temp->value == 2 || temp->value == 3) {
+			printf("|   __|   |   ");
+
+		}
+		else if (temp->value == 4 || temp->value == 8 || temp->value == 9) {
+			printf("|  |__|   |   ");
+		}
+		else if (temp->value == 5 || temp->value == 6) {
+			printf("|  |__    |   ");
+		}
+		else if (temp->value == 7) {
+			printf("|     |   |   ");
+		}
+		else if (temp->value == 10) {
+			printf("|  | |  | |   ");
+		}
+		else {
+			printf("| _/___/_ |   ");
+		}
+		temp = temp->pt;
+	}
+	printf("\n");
+
+	temp = hand;
+	while (temp != NULL) {
+		if (temp->value == 1) {
+			printf("|    |    |   ");
+
+		}
+		else if (temp->value == 2) {
+			printf("|  |__    |   ");
+		}
+		else if (temp->value == 3 || temp->value == 5 || temp->value == 9) {
+			printf("|   __|   |   ");
+		}
+		else if (temp->value == 4 || temp->value == 7) {
+			printf("|     |   |   ");
+		}
+		else if (temp->value == 6 || temp->value == 8) {
+			printf("|  |__|   |   ");
+		}
+		else if (temp->value == 10) {
+			printf("|  | |__| |   ");
+
+		}
+		else {
+			printf("| /   /   |   ");
+		}
+		temp = temp->pt;
+	}
+	printf("\n");
+
+	temp = hand;
+	while (temp != NULL) {
+		printf("|         |   ");
+		temp = temp->pt;
+	}
+	printf("\n");
+
+	temp = hand;
+	while (temp != NULL) {
+		length = strlen(temp->color);
+		printLen = (9 - length) / 2;
+
+		printf("\\");
+		for (i = 0; i < printLen; i++) {
+			printf(" ");
+
+		}
+		printf("%s", temp->color);
+		for (i = 0; i < printLen; i++) {
+			printf(" ");
+
+		}
+		if (length % 2 == 0) {
+			printf(" ");
+
+		}
+		printf("/   ");
+		temp = temp->pt;
+	}
+	printf("\n");
+
+	temp = hand;
+	while (temp != NULL) {
+		printf(" =========    ");
+		temp = temp->pt;
+	}
+	printf("\n");
+
+	//printf("%d\n", size);
+	//printf("\n");
+
+
+
+	//while (temp != NULL) {
+	//	printf("%s-%d\n", temp->color, temp->value);
+	//	temp = temp->pt;
+	//}
+}
+
+card *addCard(card* hand, card drawCard) {
+
+	card* newCard = (card*)malloc(sizeof(card));
+	*newCard = drawCard;
+
+	if (hand == NULL) {
+		return newCard;
+	}
+
+	newCard->pt = hand;
+
+	return newCard;
+}
+
+card *deleteCard(card* hand, card disCard) {
+	int i;
+	card* found = NULL;
+	card* temp;
+
+	// check if list exists
+	if (hand == NULL) {
+		return NULL;
+	}
+	//check if the first node is the card
+	if ((strcmp(hand->color, disCard.color) == 0) && (hand->value == disCard.value)) {
+		found = hand;
+		hand = hand->pt;
+	}
+	else {
+		temp = hand; //set temp to the first node
+		while (temp->pt != NULL && found == NULL) {
+			if ((strcmp(temp->pt->color, disCard.color) == 0) && (temp->pt->value == disCard.value)) {
+				found = temp->pt;
+				temp->pt = found->pt;
+			}
+			else {
+				temp = temp->pt;
+			
+			}
+		}
+	}
+
+	if (found != NULL) {
+		free(found);
+		return hand;
+	}
+	else {
+		return hand;
+	}
+	
+}
+
+bool checkPlay(card* center, card* hand, card centerCard, card playCard[]) {
+
+	card* temp;
+	int exists;
+	card* address = NULL;
+
+	exists = 0;
+	//iterate through center to find centerCard
+	temp = center;
+	while (temp != NULL) {
+		if (strcmp(temp->color, centerCard.color) == 0 && temp->value == centerCard.value) {
+			exists++;
+			break;
+		}
+		temp = temp->pt;
+	}
+
+	//iterate through hand to the find the first played card
+	temp = hand;
+	while (temp != NULL) {
+		if (strcmp(temp->color, playCard[0].color) == 0 && temp->value == playCard[0].value) {
+			exists++;
+			address = temp;
+			break;
+
+		}
+		temp = temp->pt;
+
+	}
+
+	//iterate through hand to the find the second card if such a card was played
+	temp = hand;
+	if (playCard[1].value != 0) {
+		while (temp != NULL) {
+
+			if (strcmp(temp->color, playCard[1].color) == 0 && temp->value == playCard[1].value && address != temp) {
+				exists++;
+				break;
+
+			}
+			temp = temp->pt;
+
+		}
+	}
+
+	//checks if the values of centerCard and playCard are equal and return the result
+	if (exists == 3) {
+		if (centerCard.value == (playCard[0].value + playCard[1].value)) {
+			return true;
+		}
+		else if (playCard[1].value == 11 && centerCard.value > playCard[0].value) {
+			return true; 
+		}
+		else if (centerCard.value == 11 && (playCard[0].value + playCard[1].value) <= 10) {
+			return true;
+		}
+	}
+	else if (exists == 2) {
+		if (centerCard.value == playCard[0].value) {
+			return true;
+		}
+		else if (playCard[0].value == 11) {
+			return true;
+		}
+		else if (centerCard.value == 11 && playCard[0].value < 10) {
+			return true;
+		}
+	}
+	return false;
 }
 
 #endif

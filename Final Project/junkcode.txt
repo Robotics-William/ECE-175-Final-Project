@@ -1,0 +1,146 @@
+void addCard(player parray[], int playerNum, card deck[], int size) {
+	int index;
+
+	parray[playerNum].cardNum++;
+	index = parray[playerNum].cardNum;
+
+	parray[playerNum].hand = (card*)realloc(parray[playerNum].hand, index * sizeof(card));
+	parray[playerNum].hand[index - 1] = dealCard(deck, size);
+	
+
+}
+
+void removeCard(player parray[], int playerNum, int cardLoc) {
+	int index;
+	
+	parray[playerNum].cardNum--;
+	index = parray[playerNum].cardNum;
+
+	parray[playerNum].hand[cardLoc] = parray[playerNum].hand[index];
+	parray[playerNum].hand = (card*)realloc(parray[playerNum].hand, index * sizeof(card));
+
+}
+
+void dealHands(player parray[], card deck[], int size) {
+	int i;
+	int j;
+
+	for (i = 0; i < 4; i++) {
+
+		if (parray[i].active == true) {
+			parray[i].hand = (card*)malloc(7 * sizeof(card));
+
+			for (j = 0; j < 7; j++) {
+				parray[i].hand[j] = dealCard(deck, size);
+			}
+
+			parray[i].cardNum = 7;
+		}
+	}
+}
+
+void initPlayers(player parray[4], int numPlayers) {
+	int i;
+	char dummy;
+
+	for (i = 0; i < 4; i++) {
+		parray[i].active = false;
+		parray[i].hand = NULL;
+		parray[i].cardNum = NULL;
+	}
+	for (i = 0; i < numPlayers; i++) {
+		parray[i].active = true;
+		printf("\nPlayer %d Enter your name: ", i + 1);
+		if (i == 0) {
+			scanf("%c", &dummy);
+		}
+		fgets(parray[i].name, 20, stdin);
+		parray[i].name[strlen(parray[i].name) - 1] = '\0';
+		printf("%s", parray[i].name);
+	}
+}
+
+typedef struct player_s {
+
+	bool active;
+	char name[20];
+	card* hand;
+	int cardNum;
+
+} player;
+
+
+		//get plater names
+	printf("Let's play a game of DOS\n");
+	while (inputChar != 'q') {
+		printf("Enter the number of players: ");
+		scanf("%d", &playerNum);
+
+		if (playerNum >= 1 && playerNum < 5) {
+			initPlayers(players, playerNum);
+			inputChar = 'q';
+		}
+		else {
+			printf("The number of players must be between 2 and 4\n");
+
+		}
+	}
+
+	//Create player hands
+	//dealHands(players, deck, deckSize);
+	//	//create function to add card
+
+	//printf("\n%d\n", players[0].cardNum);
+	//printCardArray(players[0].hand, 7);
+
+	//printf("\n%d\n", players[1].cardNum);
+	//printCardArray(players[1].hand, 7);
+
+	////add a card to hand
+	//addCard(players, 0, deck, deckSize);
+
+	//printf("\n%d\n", players[0].cardNum);
+	//printCardArray(players[0].hand, 8);
+
+	//addCard(players, 1, deck, deckSize);
+
+	//printf("\n%d\n", players[1].cardNum);
+	//printCardArray(players[1].hand, 8);
+
+	////remove the third card from hand
+	//removeCard(players, 0, 0);
+	//
+	//printf("\n%d\n", players[0].cardNum);
+	//printCardArray(players[0].hand, 7);
+
+	//removeCard(players, 1, 0);
+
+	//printf("\n%d\n", players[1].cardNum);
+	//printCardArray(players[1].hand, 7);
+
+
+	//TODO Create Game loop
+		//pull two cards to center
+		//add bonus cards from previous player
+		//prompt player to play card
+		//check if play is valid
+		//increment bonuses
+		//deal out cards
+
+	//distribute a card
+	//drawnCard = dealCard(deck, deckSize);
+
+
+	//printf("\n%s\n%d\n\n", drawnCard.color, drawnCard.value);
+		
+	//prints the cards for code development 
+	/*printCardArray(deck, deckSize);*/
+
+	//verify the checkplay function works 
+	//center.value = 6;
+	//play[0].value = 5;
+	//play[1].value = 1;
+
+	//if (checkPlay(center, play)) {
+	//	printf("YAY!!");
+	//}

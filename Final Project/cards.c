@@ -7,12 +7,13 @@
 
 void printCard(int cardNum, char x[]) {
 
-	int length = strlen(x);
-	int print = (9 - length) / 2;
+	int length;
+	int print;
 	int i;
 
+		length = strlen(x);
+		print = (9 - length) / 2;
 
-	
 		printf(" ========= \n/");
 
 		for (i = 0; i < print; i++) {
@@ -57,15 +58,15 @@ void printCard(int cardNum, char x[]) {
 			printf("|         |\n");
 			break;
 		case 5:
-			printf("|    __   |\n");
-			printf("|   |__   |\n");
-			printf("|    __|  |\n");
+			printf("|   __    |\n");
+			printf("|  |__    |\n");
+			printf("|   __|   |\n");
 			printf("|         |\n");
 			break;
 		case 6:
-			printf("|    __   |\n");
-			printf("|   |__   |\n");
-			printf("|   |__|  |\n");
+			printf("|   __    |\n");
+			printf("|  |__    |\n");
+			printf("|  |__|   |\n");
 			printf("|         |\n");
 			break;
 		case 7:
@@ -94,9 +95,9 @@ void printCard(int cardNum, char x[]) {
 			break;
 		case 11:
 			printf("|         |\n");
-			printf("| _|___|_ |\n");
-			printf("| _|___|_ |\n");
-			printf("|  |   |  |\n");
+			printf("|  _/___/_|\n");
+			printf("| _/___/_ |\n");
+			printf("| /   /   |\n");
 			printf("|         |\n");
 			break;
 		default:
@@ -119,9 +120,10 @@ void printCard(int cardNum, char x[]) {
 			printf(" ");
 
 		}
-		
+
 		printf("/\n");
 		printf(" ========= \n");
+
 
 }
 
