@@ -25,13 +25,15 @@ int main(void) {
 	int playerNum;
 	int centerNum;
 	int discards;
+	int draws;
 
 	bool valid = false;
 
 	card drawnCard;
 	card centerCard;
 	card playCard[2];
-
+	
+	card* temp = NULL;
 	card* center = NULL;
 	card* players[4] = {NULL, NULL, NULL, NULL};
 
@@ -143,8 +145,9 @@ int main(void) {
 
 		//prompt the current player to do a valid action
 		//TODO add multiple plays 
+		discards = 0;
+		draws = 0;
 		while (!valid) {
-			discards = 0;
 			printf("Enter draw or play to take an action: ");
 			scanf("%s", scan);
 			if (strcmp(scan, "draw") == 0) {
@@ -179,6 +182,7 @@ int main(void) {
 							centerNum--;
 							if (strcmp(centerCard.color, playCard[0].color) == 0 && strcmp(centerCard.color, playCard[1].color) == 0)  {
 								discards++;
+								draws++;
 							}
 							valid = true;
 						}
@@ -197,19 +201,40 @@ int main(void) {
 			break;
 		}
 
-		//discard to the center row 
-		for (i = 0; i < discards; i++) {
+		//discard to the center row
+		i = 0;
+		while (i < discards) {
 			
 			printf("Enter a card to add to the center row: ");
 			scanf("%s %d", &centerCard.color, &centerCard.value);
-			players[playerIndex] = deleteCard(players[playerIndex], centerCard);
-			center = addCard(center, centerCard);
-			centerNum++;
+			temp = players[playerIndex];
+			while (temp != NULL) {
+
+				if (strcmp(temp->color, centerCard.color) == 0 && temp->value == centerCard.value) {
+					players[playerIndex] = deleteCard(players[playerIndex], centerCard);
+					center = addCard(center, centerCard);
+					centerNum++;
+					i++;
+					break;
+				
+				}
+				temp = temp->pt;
+			}
+			
 
 			if (players[playerIndex] == NULL) {
 				break;
 			}
 
+		}
+		for (i = 0; i < draws; i++) {
+			for (j = 0; j < playerNum; j++) {
+				if (j != playerIndex) {
+					drawnCard = dealCard(deck, deckSize);
+					players[j] = addCard(players[j], drawnCard);
+
+				}
+			}
 		}
 
 		if (players[playerIndex] == NULL) {
