@@ -184,6 +184,21 @@ int main(void) {
 								discards++;
 								draws++;
 							}
+							else if (strcmp(centerCard.color, playCard[0].color) == 0 && strcmp(playCard[1].color, "black") == 0) {
+								discards++;
+								draws++;
+
+							}
+							else if (strcmp(centerCard.color, playCard[1].color) == 0 && strcmp(playCard[0].color, "black") == 0) {
+								discards++;
+								draws++;
+
+							}
+							else if (strcmp(playCard[0].color, playCard[1].color) == 0 && strcmp(playCard[0].color, "black") == 0) {
+								discards++;
+								draws++;
+
+							}
 							valid = true;
 						}
 						else {
@@ -245,8 +260,10 @@ int main(void) {
 		playerIndex = (playerIndex + 1) % playerNum;
 
 	}
+	//TODO print out score:
 	printf("\n+++++++++++++++++++++++++++++++++++++++++++\n");
-	printf("\n\n\n\t\tPlayer %d Wins\n\n\n", playerIndex + 1);
+	printf("\n\n\n\t\tPlayer %d Wins\n", playerIndex + 1);
+	printf("\t\tScore:\n\n\n");
 	printf("\n+++++++++++++++++++++++++++++++++++++++++++\n");
 
 	return 0;
