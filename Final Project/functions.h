@@ -542,6 +542,7 @@ bool checkPlay(card* center, card* hand, card centerCard, card playCard[]) {
 			return true;
 		}
 	}
+
 	return false;
 }
 
@@ -603,12 +604,12 @@ bool getDoubleBonus(card centerCard, card playCard[2]) {
 
 }
 
-void printGame(card* players[], card* center, int currentPlayer) {
+void printGame(card* players[], card* center, char array[][20], int currentPlayer) {
 	int i;
 
-	printf("\nPlayer %d's turn to play:\n\n\n\n\n\tCenter Row:\n", currentPlayer + 1);
+	printf("\n%s's turn to play:\n\n\n\n\n\tCenter Row:\n", array[currentPlayer]);
 	printList(center);
-	printf("\n\tPlayer %d's Hand:\n", currentPlayer + 1);
+	printf("\n\t%s's Hand:\n", array[currentPlayer]);
 	printList(players[currentPlayer]);
 	
 
