@@ -406,23 +406,30 @@ void printList(card *hand) {
 card *addCard(card* hand, card drawCard) {
 	card* temp;
 
+	/* Based on */
+
+	//dynamically allocates memory to the added card
 	card* newCard = (card*)malloc(sizeof(card));
 	*newCard = drawCard;
 
+	//checks if the hand is empty
 	if (hand == NULL) {
 		return newCard;
 	}
 
+	//checks if value is smaller than the first card
 	if (newCard->value < hand->value) {
 		newCard->pt = hand;
 		return newCard;
 	}
 
+	//finds location where the value fits in the hand
 	temp = hand;
 	while ((temp->pt != NULL) && (temp->pt->value < newCard->value)) {
 		temp = temp->pt;
 	}
-
+	
+	//adds the card to that location
 	newCard->pt = temp->pt;
 	temp->pt = newCard;
 
@@ -531,11 +538,79 @@ bool checkPlay(card* center, card* hand, card centerCard, card playCard[]) {
 		else if (playCard[0].value == 11) {
 			return true;
 		}
-		else if (centerCard.value == 11 && playCard[0].value < 10) {
+		else if (centerCard.value == 11 && playCard[0].value <= 10) {
 			return true;
 		}
 	}
 	return false;
+}
+
+int getPoints(card* players[], int currentPlayer, int numPlayers) {
+	int i;
+	int sum;
+	card* temp;
+
+	sum = 0;
+	for (i = 0; i < numPlayers; i++) {
+		temp = players[i];
+		if (i != currentPlayer) {
+			while (temp != NULL) {
+
+				if (temp->value == 11) {
+					sum += 40; 
+				}
+				else if (temp->value == 2) {
+					sum += 20;
+				
+				}
+				else {
+					sum = sum + temp->value;
+				}
+
+				temp = temp->pt;
+			}
+
+		}
+	}
+
+	return sum;
+
+}
+
+bool getDoubleBonus(card centerCard, card playCard[2]) {
+
+	if (strcmp(centerCard.color, playCard[0].color) == 0 && strcmp(centerCard.color, playCard[1].color) == 0) {
+		return true;
+	}
+	else if (strcmp(centerCard.color, playCard[0].color) == 0 && strcmp(playCard[1].color, "black") == 0) {
+		return true;
+
+	}
+	else if (strcmp(centerCard.color, playCard[1].color) == 0 && strcmp(playCard[0].color, "black") == 0) {
+		return true;
+
+	}
+	else if (strcmp(playCard[0].color, playCard[1].color) == 0 && strcmp(playCard[0].color, "black") == 0) {
+		return true;
+		
+
+	}
+
+	return false;
+
+}
+
+void printGame(card* players[], card* center, int currentPlayer) {
+	int i;
+
+	printf("\nPlayer %d's turn to play:\n\n\n\n\n\n\n", currentPlayer + 1);
+	printList(center);
+	printList(players[currentPlayer]);
+
+	for (i = 0; i < 6; i++) {
+		printf("\n");
+
+	}
 }
 
 #endif
