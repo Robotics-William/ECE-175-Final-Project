@@ -404,6 +404,7 @@ void printList(card *hand) {
 }
 
 card *addCard(card* hand, card drawCard) {
+	card* temp;
 
 	card* newCard = (card*)malloc(sizeof(card));
 	*newCard = drawCard;
@@ -412,9 +413,20 @@ card *addCard(card* hand, card drawCard) {
 		return newCard;
 	}
 
-	newCard->pt = hand;
+	if (newCard->value < hand->value) {
+		newCard->pt = hand;
+		return newCard;
+	}
 
-	return newCard;
+	temp = hand;
+	while ((temp->pt != NULL) && (temp->pt->value < newCard->value)) {
+		temp = temp->pt;
+	}
+
+	newCard->pt = temp->pt;
+	temp->pt = newCard;
+
+	return hand;
 }
 
 card *deleteCard(card* hand, card disCard) {
