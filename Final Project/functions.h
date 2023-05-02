@@ -592,7 +592,10 @@ bool getDoubleBonus(card centerCard, card playCard[2]) {
 	}
 	else if (strcmp(playCard[0].color, playCard[1].color) == 0 && strcmp(playCard[0].color, "black") == 0) {
 		return true;
-		
+
+	}
+	else if (strcmp(playCard[0].color, playCard[1].color) == 0 && strcmp(centerCard.color, "black") == 0) {
+		return true;
 
 	}
 
@@ -603,11 +606,13 @@ bool getDoubleBonus(card centerCard, card playCard[2]) {
 void printGame(card* players[], card* center, int currentPlayer) {
 	int i;
 
-	printf("\nPlayer %d's turn to play:\n\n\n\n\n\n\n", currentPlayer + 1);
+	printf("\nPlayer %d's turn to play:\n\n\n\n\n\tCenter Row:\n", currentPlayer + 1);
 	printList(center);
+	printf("\n\tPlayer %d's Hand:\n", currentPlayer + 1);
 	printList(players[currentPlayer]);
+	
 
-	for (i = 0; i < 6; i++) {
+	for (i = 0; i < 5; i++) {
 		printf("\n");
 
 	}

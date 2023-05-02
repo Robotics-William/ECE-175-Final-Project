@@ -17,7 +17,7 @@ int main(void) {
 
 	char inputChar = 'a';
 	char fileName[20];
-	char scan[8];
+	char scan[12];
 
 	int i;
 	int j;
@@ -113,14 +113,16 @@ int main(void) {
 	// game loop
 	//TODO reshuffle and deal new cards
 	//TODO create more functions
+	// 
+	//add up to two cards to the center
+	for (i = centerNum; i < 2; i++) {
+		drawnCard = dealCard(deck, deckSize);
+		center = addCard(center, drawnCard);
+		centerNum++;
+	}
+
 	while (true) {
 		
-		//add up to two cards to the center
-		for (i = centerNum; i < 4; i++) {
-			drawnCard = dealCard(deck, deckSize);
-			center = addCard(center, drawnCard);
-			centerNum++;
-		}
 		
 		//TODO add player names
 		//print the first center row and player hand
@@ -131,57 +133,62 @@ int main(void) {
 		discards = 0;
 		draws = 0;
 
-		printf("Enter draw or play to take an action: ");
+		printf("Enter 'draw' or 'play' to take an action: ");
 		scanf("%s", scan);
-		if (strcmp(scan, "draw") == 0) {
-			//printf("You drew!!!");
-			drawnCard = dealCard(deck, deckSize);
-			players[playerIndex] = addCard(players[playerIndex], drawnCard);
-			printGame(players, center, playerIndex);
-
-		}
-		else if (strcmp(scan, "play") == 0) {
-			printf("Choose a card on the center row: ");
-			scanf("%s %d", &centerCard.color, &centerCard.value);
-			printf("Enter a card to play: ");
-			scanf("%s %d", &playCard[0].color, &playCard[0].value);
-			playCard[1].value = 0;
-			//checks if the play is valid
-			if (checkPlay(center, players[playerIndex], centerCard, playCard)) {
-				//removes cards from player hand and center row,  
-				players[playerIndex] = deleteCard(players[playerIndex], playCard[0]);
-				center = deleteCard(center, centerCard);
-				centerNum--;
+		while (true) {
+			if (strcmp(scan, "draw") == 0) {
+				//printf("You drew!!!");
+				drawnCard = dealCard(deck, deckSize);
+				players[playerIndex] = addCard(players[playerIndex], drawnCard);
 				printGame(players, center, playerIndex);
-				if (strcmp(centerCard.color, playCard[0].color) == 0) {
-					discards++;
-				}
+				break;
+
 			}
-			//if not, prompts for an additional card
-			else if (playCard[0].value < centerCard.value) {
-				printf("Enter another card to play: ");
-				scanf("%s %d", &playCard[1].color, &playCard[1].value);
+			else if (strcmp(scan, "play") == 0) {
+				printf("Choose a card on the center row: ");
+				scanf("%s %d", &centerCard.color, &centerCard.value);
+				printf("Enter a card to play: ");
+				scanf("%s %d", &playCard[0].color, &playCard[0].value);
+				playCard[1].value = 0;
+				//checks if the play is valid
 				if (checkPlay(center, players[playerIndex], centerCard, playCard)) {
+					//removes cards from player hand and center row,  
 					players[playerIndex] = deleteCard(players[playerIndex], playCard[0]);
-					players[playerIndex] = deleteCard(players[playerIndex], playCard[1]);
 					center = deleteCard(center, centerCard);
 					centerNum--;
 					printGame(players, center, playerIndex);
-					if (getDoubleBonus(centerCard, playCard)) {
+					if (strcmp(centerCard.color, playCard[0].color) == 0) {
 						discards++;
-						draws++;
+					}
+					break;
+				}
+				//if not, prompts for an additional card
+				else if (playCard[0].value < centerCard.value) {
+					printf("Enter another card to play: ");
+					scanf("%s %d", &playCard[1].color, &playCard[1].value);
+					if (checkPlay(center, players[playerIndex], centerCard, playCard)) {
+						players[playerIndex] = deleteCard(players[playerIndex], playCard[0]);
+						players[playerIndex] = deleteCard(players[playerIndex], playCard[1]);
+						center = deleteCard(center, centerCard);
+						centerNum--;
+						printGame(players, center, playerIndex);
+						if (getDoubleBonus(centerCard, playCard)) {
+							discards++;
+							draws++;
+						}
+						break;
+					}
+					else {
+						printf("This is not a valid action\n");
 					}
 				}
 				else {
 					printf("This is not a valid action\n");
 				}
 			}
-			else {
-				printf("This is not a valid action\n");
-			}
 		}
-		while (strcmp(scan, "end") != 0) {
-			printf("Enter play to play anothor card or end to continue your turn: ");
+		while (strcmp(scan, "continue") != 0) {
+			printf("Enter 'play' to play anothor card or 'continue' to continue your turn: ");
 			scanf("%s", scan);
 			if (strcmp(scan, "play") == 0) {
 				printf("Choose a card on the center row: ");
@@ -231,6 +238,14 @@ int main(void) {
 			break;
 		}
 
+		for (i = centerNum; i < 2; i++) {
+			drawnCard = dealCard(deck, deckSize);
+			center = addCard(center, drawnCard);
+			centerNum++;
+		}
+
+		printGame(players, center, playerIndex);
+
 		//discard to the center row
 		i = 0;
 		while (i < discards) {
@@ -277,6 +292,13 @@ int main(void) {
 
 	}
 	
+	for (i = 0; i < playerNum; i++) {
+		if (i != playerIndex) {
+			printList(players[i]);
+		}
+
+	}
+
 	printf("\n+++++++++++++++++++++++++++++++++++++++++++\n");
 	printf("\n\n\n\t\tPlayer %d Wins\n", playerIndex + 1);
 	printf("\t\tScore: %d points\n\n\n", getPoints(players, playerIndex, playerNum));
