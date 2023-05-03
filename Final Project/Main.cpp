@@ -115,16 +115,13 @@ int main(void) {
 
 	/* main game loop - runs through multiple rounds 
 	until a player has 200 points*/
-	while (!winCheck(players, playerNum, scores)) {
+	while (!winCheck(scores, playerNum)) {
 
 		// initalizes the  playCard, centerCard, and drawnCard variables
 		centerCard = initCard();
 		drawnCard = initCard();
 		playCard[0] = initCard();
 		playCard[1] = initCard();
-		for (i = 0; i < deckSize; i++) {
-			deck[i] = initCard();
-		}
 
 		// intialize the center row and player hands to NULL
 		temp = NULL;
@@ -134,9 +131,12 @@ int main(void) {
 
 		}
 
-		//load the deck and shuffle cards
+		//if using the default file, load the deck and shuffle cards
 		if (inputInt == 1) {
 			inputFile = fopen("CardDeck.txt", "r");
+			for (i = 0; i < deckSize; i++) {
+				deck[i] = initCard();
+			}
 			readCardFile(inputFile, deck, deckSize);
 			shuffleCard(deck, deckSize);
 		}
@@ -213,7 +213,7 @@ int main(void) {
 						center = deleteCard(center, centerCard);
 						centerNum--;
 						printGame(players, center, playerNames, playerIndex);
-						if (strcmp(centerCard.color, playCard[0].color) == 0) {
+						if (getSingleBonus(centerCard, playCard)) {
 							discards++;
 						}
 						break;
@@ -279,7 +279,7 @@ int main(void) {
 						center = deleteCard(center, centerCard);
 						centerNum--;
 						printGame(players, center, playerNames, playerIndex);
-						if (strcmp(centerCard.color, playCard[0].color) == 0) {
+						if (getSingleBonus(centerCard, playCard)) {
 							discards++;
 						}
 					}
@@ -375,7 +375,7 @@ int main(void) {
 
 		printf("\n+++++++++++++++++++++++++++++++++++++++++++\n\n");
 		printf("\t%s won the round\n", playerNames[playerIndex]);
-		printf("\tScore: \t\t+%d", getPoints(players, playerIndex, playerNum));
+		printf("\tScore: \t\t\t+%d", getPoints(players, playerIndex, playerNum));
 		for (i = 0; i < playerNum; i++) {
 			printf("\n\t\t%s: \t%d", playerNames[i], scores[i]);
 		}
