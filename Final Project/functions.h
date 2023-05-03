@@ -23,16 +23,6 @@ void readCardFile(FILE *inp, card carray[], int size) {
 	for (i = 0; i < size; i++) {
 		fscanf(inp, "%s %d %s", carray[i].color, &carray[i].value, carray[i].action);
 		carray[i].pt = NULL;
-
-	/*	
-		fscanf(inp, "%s %d", carray[i].color, &carray[i].value);
-		if (carray[i].value == 11 || carray[i].value == 2) {
-			fscanf(inp, "%s", carray[i].action);
-		}
-		else {
-			strcpy(carray[i].action, "");
-		}
-	*/
 		
 	}
 
@@ -83,159 +73,6 @@ card dealCard(card carray[], int size) {
 
 	return pulledCard;
 
-}
-
-void printCardArray(card carray[], int size) {
-	int i;
-	int j;
-	int length;
-	int printLen;
-
-	for (i = 0; i < size; i++) {
-		
-		printf(" =========    ");
-		
-	}
-	printf("\n");
-
-	for (i = 0; i < size; i++) {
-
-		length = strlen(carray[i].color);
-		printLen = (9 - length) / 2;
-
-		printf("/");
-		for (j = 0; j < printLen; j++) {
-			printf(" ");
-
-		}
-		if (length % 2 == 0) {
-			printf(" ");
-
-		}
-		printf("%s", carray[i].color);
-
-		for (j = 0; j < printLen; j++) {
-			printf(" ");
-
-		}
-		printf("\\   ");
-
-	}
-	printf("\n");
-
-	for (i = 0; i < size; i++) {
-		if (carray[i].value == 1 || carray[i].value == 4) {
-			printf("|         |   ");
-
-		}
-		else if (carray[i].value == 10) {
-			printf("|     __  |   ");
-
-		}
-		else if (carray[i].value == 11) {
-			printf("|  _/___/_|   ");
-		}
-		else {
-			printf("|   __    |   ");
-		}
-
-	}
-	printf("\n");
-
-	for (i = 0; i < size; i++) {
-		if (carray[i].value == 1) {
-			printf("|    |    |   ");
-
-		}
-		else if (carray[i].value == 2 || carray[i].value == 3) {
-			printf("|   __|   |   ");
-
-		}
-		else if (carray[i].value == 4 || carray[i].value == 8 || carray[i].value == 9) {
-			printf("|  |__|   |   ");
-		}
-		else if (carray[i].value == 5 || carray[i].value == 6) {
-			printf("|  |__    |   ");
-		}
-		else if (carray[i].value == 7) {
-			printf("|     |   |   ");
-		}
-		else if (carray[i].value == 10) {
-			printf("|  | |  | |   ");
-		}
-		else {
-			printf("| _/___/_ |   ");
-		}
-
-	}
-	printf("\n");
-
-	for (i = 0; i < size; i++) {
-		if (carray[i].value == 1) {
-			printf("|    |    |   ");
-
-		}
-		else if (carray[i].value == 2) {
-			printf("|  |__    |   ");
-		}
-		else if (carray[i].value == 3 || carray[i].value == 5 || carray[i].value == 9) {
-			printf("|   __|   |   ");
-		}
-		else if (carray[i].value == 4 || carray[i].value == 7) {
-			printf("|     |   |   ");
-		}
-		else if (carray[i].value == 6 || carray[i].value == 8) {
-			printf("|  |__|   |   ");
-		}
-		else if (carray[i].value == 10) {
-			printf("|  | |__| |   ");
-
-		}
-		else {
-			printf("| /   /   |   ");
-		}
-
-	}
-	printf("\n");
-
-	for (i = 0; i < size; i++) {
-
-		printf("|         |   ");
-
-	}
-	printf("\n");
-
-	for (i = 0; i < size; i++) {
-
-		length = strlen(carray[i].color);
-		printLen = (9 - length) / 2;
-
-		printf("\\");
-		for (j = 0; j < printLen; j++) {
-			printf(" ");
-
-		}
-		printf("%s", carray[i].color);
-		for (j = 0; j < printLen; j++) {
-			printf(" ");
-
-		}
-		if (length % 2 == 0) {
-			printf(" ");
-
-		}
-		printf("/   ");
-
-	}
-	printf("\n");
-
-	for (i = 0; i < size; i++) {
-
-		printf(" =========    ");
-
-	}
-
-	//printf("%s %d %s\n", carray[i].color, carray[i].value, carray[i].action);
 }
 
 void printList(card *hand) {
@@ -530,6 +367,12 @@ bool checkPlay(card* center, card* hand, card centerCard, card playCard[]) {
 		else if (centerCard.value == 11 && (playCard[0].value + playCard[1].value) <= 10) {
 			return true;
 		}
+		else if (playCard[0].value == 11 && (centerCard.value > playCard[1].value)) {
+			return true;
+		}
+		else if (playCard[1].value == 11 && playCard[0].value == 11 && centerCard.value > 2) {
+			return true;
+		}
 	}
 	else if (exists == 2) {
 		if (centerCard.value == playCard[0].value) {
@@ -617,6 +460,29 @@ void printGame(card* players[], card* center, char array[][20], int currentPlaye
 		printf("\n");
 
 	}
+}
+
+bool winCheck(card* players[], int numPlayers, int scores[]) {
+	int i;
+	for (i = 0; i < numPlayers; i++) {
+		if (scores[i] >= 200) {
+			return true;
+
+		}
+	}
+
+	return false;
+}
+
+card initCard() {
+	card newCard;
+
+	newCard.value = 0;
+	newCard.pt = NULL;
+	strcpy(newCard.color, "none");
+	strcpy(newCard.action, "none");
+
+	return newCard;
 }
 
 #endif

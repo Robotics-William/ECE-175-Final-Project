@@ -144,3 +144,156 @@ typedef struct player_s {
 	//if (checkPlay(center, play)) {
 	//	printf("YAY!!");
 	//}
+
+void printCardArray(card carray[], int size) {
+	int i;
+	int j;
+	int length;
+	int printLen;
+
+	for (i = 0; i < size; i++) {
+		
+		printf(" =========    ");
+		
+	}
+	printf("\n");
+
+	for (i = 0; i < size; i++) {
+
+		length = strlen(carray[i].color);
+		printLen = (9 - length) / 2;
+
+		printf("/");
+		for (j = 0; j < printLen; j++) {
+			printf(" ");
+
+		}
+		if (length % 2 == 0) {
+			printf(" ");
+
+		}
+		printf("%s", carray[i].color);
+
+		for (j = 0; j < printLen; j++) {
+			printf(" ");
+
+		}
+		printf("\\   ");
+
+	}
+	printf("\n");
+
+	for (i = 0; i < size; i++) {
+		if (carray[i].value == 1 || carray[i].value == 4) {
+			printf("|         |   ");
+
+		}
+		else if (carray[i].value == 10) {
+			printf("|     __  |   ");
+
+		}
+		else if (carray[i].value == 11) {
+			printf("|  _/___/_|   ");
+		}
+		else {
+			printf("|   __    |   ");
+		}
+
+	}
+	printf("\n");
+
+	for (i = 0; i < size; i++) {
+		if (carray[i].value == 1) {
+			printf("|    |    |   ");
+
+		}
+		else if (carray[i].value == 2 || carray[i].value == 3) {
+			printf("|   __|   |   ");
+
+		}
+		else if (carray[i].value == 4 || carray[i].value == 8 || carray[i].value == 9) {
+			printf("|  |__|   |   ");
+		}
+		else if (carray[i].value == 5 || carray[i].value == 6) {
+			printf("|  |__    |   ");
+		}
+		else if (carray[i].value == 7) {
+			printf("|     |   |   ");
+		}
+		else if (carray[i].value == 10) {
+			printf("|  | |  | |   ");
+		}
+		else {
+			printf("| _/___/_ |   ");
+		}
+
+	}
+	printf("\n");
+
+	for (i = 0; i < size; i++) {
+		if (carray[i].value == 1) {
+			printf("|    |    |   ");
+
+		}
+		else if (carray[i].value == 2) {
+			printf("|  |__    |   ");
+		}
+		else if (carray[i].value == 3 || carray[i].value == 5 || carray[i].value == 9) {
+			printf("|   __|   |   ");
+		}
+		else if (carray[i].value == 4 || carray[i].value == 7) {
+			printf("|     |   |   ");
+		}
+		else if (carray[i].value == 6 || carray[i].value == 8) {
+			printf("|  |__|   |   ");
+		}
+		else if (carray[i].value == 10) {
+			printf("|  | |__| |   ");
+
+		}
+		else {
+			printf("| /   /   |   ");
+		}
+
+	}
+	printf("\n");
+
+	for (i = 0; i < size; i++) {
+
+		printf("|         |   ");
+
+	}
+	printf("\n");
+
+	for (i = 0; i < size; i++) {
+
+		length = strlen(carray[i].color);
+		printLen = (9 - length) / 2;
+
+		printf("\\");
+		for (j = 0; j < printLen; j++) {
+			printf(" ");
+
+		}
+		printf("%s", carray[i].color);
+		for (j = 0; j < printLen; j++) {
+			printf(" ");
+
+		}
+		if (length % 2 == 0) {
+			printf(" ");
+
+		}
+		printf("/   ");
+
+	}
+	printf("\n");
+
+	for (i = 0; i < size; i++) {
+
+		printf(" =========    ");
+
+	}
+
+	//printf("%s %d %s\n", carray[i].color, carray[i].value, carray[i].action);
+}
