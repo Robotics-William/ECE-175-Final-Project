@@ -1,5 +1,5 @@
 #define _CRT_SECURE_NO_WARNINGS
-
+// Michael Ries and William Young's Final Project
 #include <stdio.h>
 #include <math.h>
 #include <string.h>
@@ -163,6 +163,8 @@ int main(void) {
 
 		//have the players take turns until someone wins the rounds
 		while (true) {
+			// get the next player 
+			playerIndex = (playerIndex + 1) % playerNum;
 
 			//TODO add player names
 			// prints the first center row and player hand
@@ -368,8 +370,7 @@ int main(void) {
 				break;
 			}
 
-			// get the next player 
-			playerIndex = (playerIndex + 1) % playerNum;
+
 		}
 
 		printf("\n+++++++++++++++++++++++++++++++++++++++++++\n\n");
