@@ -23,7 +23,7 @@ jobs:
 
       - name: Build C++ project
         run: |
-          g++ -o main main.cpp
+          g++ -o main "Final Project"/main.cpp
 
       - name: Run SonarQube Scan
         uses: sonarsource/sonarqube-scan-action@master
