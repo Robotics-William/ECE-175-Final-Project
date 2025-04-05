@@ -3,7 +3,7 @@ name: C++ Build and SonarQube Scan
 on:
   push:
     branches:
-      - master  # Change this from 'main' to 'master'
+      - master  # Change to 'master' branch
 
 jobs:
   build:
@@ -27,5 +27,12 @@ jobs:
 
       - name: Run SonarQube Scan
         uses: sonarsource/sonarqube-scan-action@master
-        env:
-          SONAR_TOKEN:_
+        with:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+
+      # Optional: Fail job if Quality Gate fails
+      # - uses: sonarsource/sonarqube-quality-gate-action@master
+      #   timeout-minutes: 5
+      #   with:
+      #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
