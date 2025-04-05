@@ -3,7 +3,7 @@ name: C++ Build and SonarQube Scan
 on:
   push:
     branches:
-      - main
+      - master  # Change this from 'main' to 'master'
 
 jobs:
   build:
@@ -28,5 +28,4 @@ jobs:
       - name: Run SonarQube Scan
         uses: sonarsource/sonarqube-scan-action@master
         env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+          SONAR_TOKEN:_
